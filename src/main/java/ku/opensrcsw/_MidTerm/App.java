@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.Reader;
+import midterm.problem2.RegularExpression;
 
 public class App 
 {
@@ -12,15 +13,17 @@ public class App
     {
         JSONParser parser = new JSONParser();
         Scanner in = new Scanner(System.in);
-        System.out.print("Enter the keyword you are looking for: ");
-        String text = in.next();
+        System.out.print("Enter the pattern you are looking for: ");
+        String pattern = in.next();
         Reader reader = new FileReader("midterm.json");
         JSONObject jsonObject = (JSONObject) parser.parse(reader);
         JSONArray poems = (JSONArray) jsonObject.get("poem");
-        for (int i = 0; i < poems.size(); i++) {
+ 	   RegularExpression re = new RegularExpression();
+
+        for (int i = 0; i < poems.size(); i++) {    	   
         	JSONObject poem = (JSONObject) poems.get(i);
         	String item = (String) poem.get("item");
-        	if (item.contains(text)) {
+        	if (re.check(item, pattern)) {
             	System.out.println("item " + i + ": " + item);
         	}
         }
